@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ level.name }} - Detalle</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="detail-page">
+    <div class="detail-container">
+        <a href="/" class="back-button">← Volver al Roadmap</a>
+
+
+
+        <section class="detail-content" style="--level-color: {{ level.color }};">
+            <div class="detail-image-container">
+                <img src="{{ url_for('static', filename='images/' + level.image) }}" alt="{{ level.name }}"
+                    class="detail-image">
+            </div>
+
+            <div class="detail-text">
+                <!-- Integrated Header -->
+                <div class="integrated-header">
+                    <div class="meta-tags">
+                        <span class="level-badge">{{ level.badge }}</span>
+                        <span class="years-display">{{ level.years }}</span>
+                    </div>
+                    <h1>{{ level.name }}</h1>
+                </div>
+
+                <h2>Descripción del Rol</h2>
+                <p class="description">{{ level.details }}</p>
+
+                <h2>Posibles Trabajos / Roles</h2>
+                <div class="jobs-grid">
+                    {% for job in level.jobs %}
+                    <div class="job-card">
+                        <h3>{{ job.title }}</h3>
+                        <p>{{ job.desc }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <h2>Conocimientos Clave</h2>
+                <div class="concept-list">
+                    {% for concept in level.concepts %}
+                    <details class="concept-item">
+                        <summary>{{ concept.title }}</summary>
+                        <p class="concept-desc">{{ concept.desc }}</p>
+                    </details>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Cruz Reynoso</p>
+        <p style="margin-top: 5px; font-size: 0.8rem; letter-spacing: 1px;">1167572893</p>
+    </footer>
+</body>
+
+</html>

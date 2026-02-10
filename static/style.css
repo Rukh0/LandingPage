@@ -1,0 +1,584 @@
+:root {
+    --bg-color: #0b1121;
+    --card-bg: rgba(30, 41, 59, 0.4);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-color: #38bdf8;
+    --accent-glow: rgba(56, 189, 248, 0.5);
+    --border-color: rgba(148, 163, 184, 0.1);
+    --font-family: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image:
+        linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)),
+        /* Dark overlay */
+        url('images/main_bg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    color: var(--text-primary);
+    font-family: var(--font-family);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Background Animation */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08) 0%, transparent 25%);
+    filter: blur(40px);
+    animation: pulseBackground 10s infinite alternate;
+}
+
+@keyframes pulseBackground {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header {
+    text-align: center;
+    padding: 60px 0 30px;
+    /* Reduced padding */
+    animation: fadeInDown 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+header h1 {
+    font-size: 3.5rem;
+    /* Reduced font size */
+    font-weight: 800;
+    margin-bottom: 10px;
+    /* Reduced margin */
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 300% 300%;
+    animation: gradientText 5s ease infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -2px;
+    filter: drop-shadow(0 0 20px rgba(35, 213, 171, 0.4));
+}
+
+@keyframes gradientText {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+header p {
+    font-size: 1.2rem;
+    /* Slightly smaller */
+    max-width: 800px;
+    /* Wider text block */
+    margin: 0 auto;
+    font-weight: 500;
+    line-height: 1.5;
+    /* Brighter, more elegant gradient */
+    background: linear-gradient(90deg, #e2e8f0, #c084fc, #38bdf8, #e2e8f0);
+    background-size: 200% auto;
+    animation: shimmer 4s linear infinite;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 1;
+    letter-spacing: 0.5px;
+    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.2));
+}
+
+@keyframes shimmer {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 30px;
+    /* Reduced gap */
+    padding-bottom: 80px;
+    /* Reduced bottom padding */
+}
+
+.card {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--level-color);
+    /* Subtle top border hint */
+    border-radius: 24px;
+    padding: 40px;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease-out forwards;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Background Image Layer */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    opacity: 0.15;
+    /* Subtle background */
+    transition: transform 0.5s ease, opacity 0.3s ease;
+    z-index: 0;
+    filter: grayscale(40%);
+}
+
+.card:hover::before {
+    transform: scale(1.1);
+    opacity: 0.25;
+    filter: grayscale(0%);
+}
+
+/* Gradient Border Effect on Hover */
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 2px;
+    /* Use dynamic level color for glow */
+    background: linear-gradient(135deg, var(--level-color), rgba(255, 255, 255, 0.2), transparent 60%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+    /* Above background, below content */
+}
+
+/* Ensure content is above background */
+.card-header,
+.card ul {
+    position: relative;
+    z-index: 2;
+}
+
+.card:hover::after {
+    opacity: 1;
+}
+
+.card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px -10px var(--level-color);
+    /* Colored glow */
+    background-color: rgba(30, 41, 59, 0.7);
+    border-color: var(--level-color);
+}
+
+.card-header {
+    margin-bottom: 30px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.level-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--level-color);
+    border: 1px solid var(--level-color);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 0 0 10px var(--level-color);
+    /* Small glow for badge */
+}
+
+.years-display {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.years-display::before {
+    content: "⏳";
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.card h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.5px;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.card ul {
+    list-style: none;
+    flex-grow: 1;
+}
+
+.card li {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.card li:hover {
+    color: var(--text-primary);
+    transform: translateX(5px);
+}
+
+.card li::before {
+    content: "•";
+    color: var(--level-color);
+    /* Bullet color matches level */
+    margin-right: 15px;
+    font-size: 1.5rem;
+    line-height: 1;
+    text-shadow: 0 0 10px var(--level-color);
+}
+
+/* Detail Page Styles */
+.detail-container {
+    max-width: 1200px;
+    /* Wider container */
+    margin: 0 auto;
+    padding: 20px;
+    /* Reduced padding */
+    position: relative;
+    z-index: 10;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 8px 16px;
+    /* Smaller button */
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    /* Reduced margin */
+    font-weight: 500;
+    transition: all 0.3s ease;
+    align-items: center;
+}
+
+.integrated-header h1 {
+    font-size: 2.8rem;
+    background: linear-gradient(135deg, #fff 0%, var(--level-color) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+    line-height: 1.1;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3));
+}
+
+/* Reusing grid layout */
+.detail-content {
+    background: rgba(30, 41, 59, 0.7);
+    /* Slightly more opaque */
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    /* Tighter radius */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    /* Fixed width for image, rest for text */
+    gap: 0;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.detail-image-container {
+    height: 100%;
+    min-height: 100%;
+    /* Fill height */
+    position: relative;
+    overflow: hidden;
+}
+
+.detail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.detail-image-container:hover .detail-image {
+    transform: scale(1.05);
+}
+
+.detail-text {
+    padding: 30px;
+    /* Reduced padding */
+}
+
+.description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.detail-text h2 {
+    color: var(--level-color);
+    font-size: 1.5rem;
+    /* Smaller headers */
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+    margin-top: 10px;
+}
+
+.detail-text h2:first-of-type {
+    margin-top: 0;
+}
+
+/* Job Cards Grid */
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    /* Slightly smaller cards */
+    gap: 10px;
+    /* Reduced gap */
+    margin-bottom: 20px;
+}
+
+.job-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 12px;
+    /* Reduced padding */
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.job-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-3px);
+    border-color: var(--level-color);
+}
+
+.job-card h3 {
+    color: var(--level-color);
+    font-size: 1rem;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.job-card p {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.concept-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.concept-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--level-color);
+    overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+.concept-item[open] {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.concept-item summary {
+    padding: 12px 15px;
+    cursor: pointer;
+    font-weight: 500;
+    list-style: none;
+    /* Remove default triangle */
+    display: flex;
+    align-items: center;
+    outline: none;
+}
+
+.concept-item summary::-webkit-details-marker {
+    display: none;
+    /* Hide default triangle in WebKit */
+}
+
+.concept-item summary::before {
+    content: "+";
+    color: var(--level-color);
+    margin-right: 12px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.concept-item[open] summary::before {
+    transform: rotate(45deg);
+}
+
+.concept-desc {
+    padding: 0 15px 15px 40px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+    animation: fadeInDown 0.3s ease-out;
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 40px 0 20px;
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+    }
+
+    header p {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+
+    .roadmap-grid {
+        grid-template-columns: 1fr;
+        /* Stack cards on mobile */
+        gap: 20px;
+    }
+
+    .detail-content {
+        grid-template-columns: 1fr;
+    }
+
+    .detail-image-container {
+        min-height: 200px;
+        /* Smaller image height */
+    }
+
+    .detail-text {
+        padding: 20px;
+        /* Reduced padding */
+    }
+
+    .integrated-header h1 {
+        font-size: 2rem;
+    }
+
+    .detail-container {
+        padding: 10px;
+    }
+
+    .jobs-grid {
+        grid-template-columns: 1fr;
+        /* Stack job cards */
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 60px 0;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar for Webkit */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}

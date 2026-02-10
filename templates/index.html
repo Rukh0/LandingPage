@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap de Desarrollador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-animation"></div>
+    <header>
+        <div class="container">
+            <h1>Niveles de Seniority</h1>
+            <p>Guía de conceptos y habilidades para cada etapa de tu carrera.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="roadmap-container" class="roadmap-grid">
+            {% for level in levels %}
+            <a href="{{ url_for('level_detail', slug=level.slug) }}"
+                style="text-decoration: none; display: block; color: inherit;">
+                <div class="card"
+                    style="--level-color: {{ level.color }}; --bg-image: url('{{ url_for('static', filename='images/' + level.image) }}'); animation-delay: {{ loop.index0 * 0.1 }}s">
+                    <div class="card-header">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <span class="level-badge">{{ level.badge }}</span>
+                            <span class="years-display">{{ level.years }}</span>
+                        </div>
+                        <h2>{{ level.name }}</h2>
+                    </div>
+                    <ul>
+                        {% for concept in level.concepts[:3] %} {# Show only first 3 on preview #}
+                        <li>{{ concept.title }}</li>
+                        {% endfor %}
+                        <li style="font-style: italic; opacity: 0.7;">+ ver detalles...</li>
+                    </ul>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <p>Cruz Reynoso</p>
+        <p style="margin-top: 5px; font-size: 0.8rem; letter-spacing: 1px;">1167572893</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
